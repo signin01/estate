@@ -1,0 +1,15 @@
+// Sample Properties Data with null owner
+const sampleProperties = [
+    { title: "Luxury Apartment in Andheri", description: "Beautiful 3BHK apartment with modern amenities", price: 12500000, area: 1500, bedrooms: 3, bathrooms: 2, propertyType: "apartment", status: "sale", location: { address: "Andheri East", city: "Mumbai", state: "Maharashtra", pincode: "400069", coordinates: { lat: 19.1136, lng: 72.8697 } }, amenities: ["Parking", "Gym", "Swimming Pool", "Security"], mainImage: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=500", isFeatured: true, owner: null },
+    { title: "Modern 2BHK in Bandra", description: "Spacious apartment near Bandra station", price: 8500000, area: 1100, bedrooms: 2, bathrooms: 2, propertyType: "apartment", status: "sale", location: { address: "Bandra West", city: "Mumbai", state: "Maharashtra", pincode: "400050", coordinates: { lat: 19.0596, lng: 72.8295 } }, amenities: ["Parking", "Gym", "Security"], mainImage: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=500", owner: null },
+    { title: "Beachfront Villa", description: "Luxury villa with sea view", price: 45000000, area: 3500, bedrooms: 5, bathrooms: 4, propertyType: "villa", status: "sale", location: { address: "Juhu Beach", city: "Mumbai", state: "Maharashtra", pincode: "400049", coordinates: { lat: 19.1038, lng: 72.8257 } }, amenities: ["Private Pool", "Garden", "Parking", "Security", "Beach Access"], mainImage: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=500", isFeatured: true, owner: null },
+    { title: "Commercial Office Space", description: "Prime location office space", price: 25000000, area: 2000, bedrooms: 0, bathrooms: 2, propertyType: "commercial", status: "rent", location: { address: "BKC", city: "Mumbai", state: "Maharashtra", pincode: "400051", coordinates: { lat: 19.0718, lng: 72.8652 } }, amenities: ["AC", "Parking", "Security", "Elevator"], mainImage: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=500", owner: null }
+];
+
+// Initialize properties
+Property.countDocuments().then(async (count) => {
+    if (count === 0) {
+        await Property.insertMany(sampleProperties);
+        console.log('Sample properties initialized');
+    }
+});
