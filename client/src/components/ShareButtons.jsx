@@ -1,55 +1,63 @@
+// client/src/components/ShareButtons.jsx
 import React from 'react';
-import { FaWhatsapp, FaFacebook, FaTwitter, FaEnvelope, FaLink } from 'react-icons/fa';
-import toast from 'react-hot-toast';
 
-function ShareButtons({ property }) {
-    const shareOnWhatsApp = () => {
-        const text = `Check out this property: ${property.title}\nPrice: Rs. ${property.price.toLocaleString()}\nLocation: ${property.location.city}\nView more: ${window.location.href}`;
-        const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-        window.open(url, '_blank');
-    };
+const ShareButtons = ({ property }) => {
+  const shareUrl = window.location.href;
+  const text = `Check out this property: ${property?.title || 'Amazing Property'}`;
 
-    const shareOnFacebook = () => {
-        const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
-        window.open(url, '_blank');
-    };
+  const shareOnFacebook = () => {
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`, '_blank');
+  };
 
-    const shareOnTwitter = () => {
-        const text = `Check out this amazing property: ${property.title}`;
-        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`;
-        window.open(url, '_blank');
-    };
+  const shareOnTwitter = () => {
+    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${shareUrl}`, '_blank');
+  };
 
-    const shareByEmail = () => {
-        const subject = `Property: ${property.title}`;
-        const body = `Check out this property: ${property.title}\nPrice: Rs. ${property.price.toLocaleString()}\nLocation: ${property.location.city}\nView here: ${window.location.href}`;
-        window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    };
+  const shareOnWhatsApp = () => {
+    window.open(`https://wa.me/?text=${text} ${shareUrl}`, '_blank');
+  };
 
-    const copyLink = () => {
-        navigator.clipboard.writeText(window.location.href);
-        toast.success('Link copied to clipboard!');
-    };
+  return (
+    <div style={styles.container}>
+      <h4>Share this property:</h4>
+      <button onClick={shareOnFacebook} style={styles.facebook}>Facebook</button>
+      <button onClick={shareOnTwitter} style={styles.twitter}>Twitter</button>
+      <button onClick={shareOnWhatsApp} style={styles.whatsapp}>WhatsApp</button>
+    </div>
+  );
+};
 
-    return (
-        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center', marginTop: '15px' }}>
-            <button onClick={shareOnWhatsApp} style={{ background: '#25D366', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '25px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <FaWhatsapp /> WhatsApp
-            </button>
-            <button onClick={shareOnFacebook} style={{ background: '#1877F2', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '25px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <FaFacebook /> Facebook
-            </button>
-            <button onClick={shareOnTwitter} style={{ background: '#1DA1F2', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '25px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <FaTwitter /> Twitter
-            </button>
-            <button onClick={shareByEmail} style={{ background: '#EA4335', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '25px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <FaEnvelope /> Email
-            </button>
-            <button onClick={copyLink} style={{ background: '#666', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '25px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <FaLink /> Copy Link
-            </button>
-        </div>
-    );
-}
+const styles = {
+  container: {
+    margin: '1rem 0'
+  },
+  facebook: {
+    margin: '0 0.5rem',
+    padding: '0.5rem 1rem',
+    backgroundColor: '#3b5998',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer'
+  },
+  twitter: {
+    margin: '0 0.5rem',
+    padding: '0.5rem 1rem',
+    backgroundColor: '#1da1f2',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer'
+  },
+  whatsapp: {
+    margin: '0 0.5rem',
+    padding: '0.5rem 1rem',
+    backgroundColor: '#25d366',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer'
+  }
+};
 
 export default ShareButtons;

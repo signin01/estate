@@ -15,13 +15,15 @@ function Register({ API_URL, setToken, setUser }) {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await axios.post(`${API_URL}/auth/register`, formData);
+            // CHANGED: Removed /auth from the URL
+const response = await axios.post(`${API_URL}/register`, formData);
             localStorage.setItem('token', response.data.token);
             setToken(response.data.token);
             setUser(response.data.user);
             toast.success('Registration successful!');
             navigate('/');
         } catch (error) {
+            console.error('Registration error:', error);
             toast.error(error.response?.data?.message || 'Registration failed');
         } finally {
             setLoading(false);
@@ -49,7 +51,7 @@ function Register({ API_URL, setToken, setUser }) {
                     <div style={{ marginBottom: '15px' }}>
                         <div style={{ position: 'relative' }}>
                             <FaPhone style={{ position: 'absolute', left: '15px', top: '15px', color: '#999' }} />
-                            <input type="tel" name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleChange} style={{ width: '100%', padding: '12px 15px 12px 45px', border: '1px solid #ddd', borderRadius: '10px' }} />
+                            <input type="tel" name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleChange} style={{ width: '100%', padding: '12px 15px 12px 45px', border: '1px solid #ddd', borderRadius: '10px' }} required />
                         </div>
                     </div>
                     <div style={{ marginBottom: '15px' }}>
@@ -64,7 +66,7 @@ function Register({ API_URL, setToken, setUser }) {
                             <option value="agent">Real Estate Agent</option>
                         </select>
                     </div>
-                    <button type="submit" disabled={loading} className="btn-primary" style={{ width: '100%', padding: '14px' }}>{loading ? 'Loading...' : 'Register'}</button>
+                    <button type="submit" disabled={loading} className="btn-primary" style={{ width: '100%', padding: '14px', backgroundColor: '#667eea', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer', fontSize: '16px' }}>{loading ? 'Loading...' : 'Register'}</button>
                 </form>
                 <p style={{ textAlign: 'center', marginTop: '20px' }}>Already have an account? <Link to="/login" style={{ color: '#667eea' }}>Login</Link></p>
             </div>
