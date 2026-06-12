@@ -13,7 +13,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Contact from './pages/Contact';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5002/api';
+// ✅ UPDATED: This will use Render URL when deployed, localhost for development
+const API_URL = process.env.REACT_APP_API_URL || 'https://realestate-backend-Ooet.onrender.com/api';
 
 function App() {
     const [token, setToken] = useState(localStorage.getItem('token'));

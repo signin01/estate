@@ -4,7 +4,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 
-function Login({ API_URL, setToken, setUser }) {  // Keep API_URL prop
+function Login({ API_URL, setToken, setUser }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -14,7 +14,7 @@ function Login({ API_URL, setToken, setUser }) {  // Keep API_URL prop
         e.preventDefault();
         setLoading(true);
         try {
-            // ✅ FIXED: Use API_URL with /login (not /auth/login)
+            // ✅ CORRECT ENDPOINT
             const response = await axios.post(`${API_URL}/login`, { email, password });
             localStorage.setItem('token', response.data.token);
             setToken(response.data.token);
