@@ -4,7 +4,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 
-function Login({ API_URL, setToken, setUser }) {
+function Login({ API_URL, setToken, setUser }) {  // Keep API_URL prop
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -14,7 +14,8 @@ function Login({ API_URL, setToken, setUser }) {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await axios.post(`${API_URL}/auth/login`, { email, password });
+            // ✅ FIXED: Use API_URL with /login (not /auth/login)
+            const response = await axios.post(`${API_URL}/login`, { email, password });
             localStorage.setItem('token', response.data.token);
             setToken(response.data.token);
             setUser(response.data.user);
@@ -37,19 +38,42 @@ function Login({ API_URL, setToken, setUser }) {
                         <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Email</label>
                         <div style={{ position: 'relative' }}>
                             <FaEnvelope style={{ position: 'absolute', left: '15px', top: '15px', color: '#999' }} />
-                            <input type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} style={{ width: '100%', padding: '12px 15px 12px 45px', border: '1px solid #ddd', borderRadius: '10px' }} required />
+                            <input 
+                                type="email" 
+                                placeholder="Enter your email" 
+                                value={email} 
+                                onChange={(e) => setEmail(e.target.value)} 
+                                style={{ width: '100%', padding: '12px 15px 12px 45px', border: '1px solid #ddd', borderRadius: '10px' }} 
+                                required 
+                            />
                         </div>
                     </div>
                     <div style={{ marginBottom: '25px' }}>
                         <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Password</label>
                         <div style={{ position: 'relative' }}>
                             <FaLock style={{ position: 'absolute', left: '15px', top: '15px', color: '#999' }} />
-                            <input type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} style={{ width: '100%', padding: '12px 15px 12px 45px', border: '1px solid #ddd', borderRadius: '10px' }} required />
+                            <input 
+                                type="password" 
+                                placeholder="Enter your password" 
+                                value={password} 
+                                onChange={(e) => setPassword(e.target.value)} 
+                                style={{ width: '100%', padding: '12px 15px 12px 45px', border: '1px solid #ddd', borderRadius: '10px' }} 
+                                required 
+                            />
                         </div>
                     </div>
-                    <button type="submit" disabled={loading} className="btn-primary" style={{ width: '100%', padding: '14px' }}>{loading ? 'Loading...' : 'Login'}</button>
+                    <button 
+                        type="submit" 
+                        disabled={loading} 
+                        className="btn-primary" 
+                        style={{ width: '100%', padding: '14px', backgroundColor: '#667eea', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer' }}
+                    >
+                        {loading ? 'Loading...' : 'Login'}
+                    </button>
                 </form>
-                <p style={{ textAlign: 'center', marginTop: '20px' }}>Don't have an account? <Link to="/register" style={{ color: '#667eea' }}>Register</Link></p>
+                <p style={{ textAlign: 'center', marginTop: '20px' }}>
+                    Don't have an account? <Link to="/register" style={{ color: '#667eea' }}>Register</Link>
+                </p>
             </div>
         </div>
     );
